@@ -10,7 +10,8 @@ _None yet._
 
 ## Components
 
-_None yet._
+- [HoYoLAB daily check-in](hoyolab-daily-signin.md) — scheduled workflow
+  that claims the Genshin Impact daily login reward.
 
 ## Decisions
 
@@ -18,4 +19,6 @@ _None yet._
 
 ## Processes
 
-_None yet._
+- [Scheduled automations](scheduled-automations.md) — how recurring
+  GitHub Actions tasks are structured, and how their secrets are named
+  and scoped.

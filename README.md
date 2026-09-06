@@ -27,8 +27,15 @@ docs/
   to the table in `AGENTS.md`.
 - **LLM wiki.** Raw material lands in `docs/raw/` untouched. Agents
   synthesize it into structured pages under `docs/wiki/`, keep
-  `docs/wiki/index.md` current, and append every change to
-  `docs/wiki/log.md`. Full protocol in `docs/schema/AGENTS.md`.
+  [`docs/wiki/index.md`](docs/wiki/index.md) current, and append every
+  change to `docs/wiki/log.md`. Full protocol in `docs/schema/AGENTS.md`.
+
+## Scheduled automations
+
+Recurring GitHub Actions tasks (one workflow + one `scripts/` file each)
+live under `.github/workflows/`. The pattern, secret conventions, and
+each instance are documented in the wiki:
+[`docs/wiki/scheduled-automations.md`](docs/wiki/scheduled-automations.md).
 
 ## Changelog
 

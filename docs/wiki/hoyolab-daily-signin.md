@@ -7,7 +7,7 @@ HoYoLAB daily check-in reward for one Genshin Impact account.
 
 | File | Role |
 |------|------|
-| `.github/workflows/hoyolab-genshin-signin.yml` | Cron trigger (`0 17 * * *` UTC ≈ 00:00 UTC+7) + `workflow_dispatch` |
+| `.github/workflows/hoyolab-genshin-signin.yml` | Cron trigger (`0 17 * * *` UTC ≈ 00:00 UTC+7) + `workflow_dispatch`, `environment: hoyolab` |
 | `scripts/hoyolab-signin.sh` | Sends the POST, interprets the response |
 
 ## How it works
@@ -46,9 +46,13 @@ through a new workflow file:
 
 ## Secret
 
-`HOYOLAB_COOKIE` — a repository secret holding the full `Cookie:` value
-from a logged-in session on `act.hoyolab.com`. Must contain `ltoken_v2`,
-`ltuid_v2`, `ltmid_v2`.
+`HOYOLAB_COOKIE` — the full `Cookie:` value from a logged-in session on
+`act.hoyolab.com` (must contain `ltoken_v2`, `ltuid_v2`, `ltmid_v2`).
+
+Stored in a GitHub Environment named **`hoyolab`** with no protection
+rules. Create it at Settings → Environments, add the secret there, and
+the workflow's `environment: hoyolab` line picks it up. Do not add
+required reviewers or a wait timer — they would block scheduled runs.
 
 ## Operations
 

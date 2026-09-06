@@ -10,6 +10,8 @@ One automation = one `.github/workflows/*.yml` file that:
 - triggers on `schedule:` (cron) plus `workflow_dispatch:` for manual runs;
 - sets `permissions: contents: read` — nothing more is granted to
   `GITHUB_TOKEN`;
+- names a GitHub Environment (`environment: <service>`) so its credential
+  is isolated from every other workflow;
 - declares a `concurrency` group so runs cannot overlap, and a short
   `timeout-minutes`;
 - runs a single script from `scripts/`, passing credentials through
@@ -30,14 +32,17 @@ scheduled runs.
 
 ## Secrets
 
-- Name secrets `SERVICE_PURPOSE` (e.g. `HOYOLAB_COOKIE`) so the Actions
-  secrets list stays legible. Limits are generous — 100 repo secrets,
-  48 KB each — so a growing flat list is fine.
-- Upgrade to a **GitHub Environment per service** only when the flat list
-  becomes unwieldy, or when you need a leaked workflow to be unable to
-  read another service's credential. Environment secrets are exposed only
-  to jobs that name that environment via `environment:`; the secret names
-  stay the same.
+- Each service gets its own **GitHub Environment** (`hoyolab`,
+  `serviceB`, ...) holding that service's secrets. The job declares
+  `environment: <service>`, so a mistake in one workflow cannot read
+  another service's credential.
+- The environment must have **no protection rules** — no required
+  reviewers, no wait timer, no deployment-branch limits. Any of those
+  would pause or block every scheduled run. (Bare environment secrets
+  work on free private repos; protection rules need GitHub Pro or a
+  public repo anyway.)
+- Name secrets `SERVICE_PURPOSE` (e.g. `HOYOLAB_COOKIE`) even inside an
+  environment — it keeps `env:` blocks self-describing.
 - Avoid packing multiple credentials into one JSON secret — you lose
   per-credential rotation and visibility.
 

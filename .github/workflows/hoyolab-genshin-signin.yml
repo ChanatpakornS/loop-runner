@@ -2,9 +2,11 @@ name: hoyolab-genshin-signin
 
 # Daily HoYoLAB check-in for Genshin Impact.
 #
-# Setup: add a repository secret HOYOLAB_COOKIE containing the full cookie
-# string from a logged-in browser session on https://act.hoyolab.com/
-# (it must include ltoken_v2, ltuid_v2, ltmid_v2).
+# Setup: create a GitHub Environment named "hoyolab" (Settings > Environments)
+# with NO protection rules, and add the secret HOYOLAB_COOKIE to it — the full
+# cookie string from a logged-in browser session on https://act.hoyolab.com/
+# (it must include ltoken_v2, ltuid_v2, ltmid_v2). Do not add required
+# reviewers or a wait timer: those would block every scheduled run.
 #
 # The cookie expires after a few weeks. When this job starts failing with a
 # "not logged in" retcode, re-copy the cookie from the browser and update
@@ -27,6 +29,7 @@ concurrency:
 jobs:
   signin:
     runs-on: ubuntu-latest
+    environment: hoyolab
     timeout-minutes: 5
     steps:
       - name: Checkout

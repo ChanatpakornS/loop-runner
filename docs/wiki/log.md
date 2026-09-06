@@ -26,3 +26,14 @@ Format defined in [`../schema/AGENTS.md`](../schema/AGENTS.md).
   and script, env configuration, `HOYOLAB_COOKIE` secret, retcode
   handling, and operational notes (cookie expiry, ToS).
 - Index: added the two pages under Processes and Components.
+
+## 2026-09-06 — Scope automation secrets to GitHub Environments
+
+- Decision: each scheduled automation names a bare GitHub Environment
+  (`environment: <service>`, no protection rules) so its credential is
+  isolated from other workflows.
+- Updated `docs/wiki/scheduled-automations.md` (shape + Secrets sections)
+  and `docs/wiki/hoyolab-daily-signin.md` (Secret section, files table)
+  to require the `hoyolab` environment.
+- Updated `.github/workflows/hoyolab-genshin-signin.yml`: added
+  `environment: hoyolab` to the job and revised the setup comment.
